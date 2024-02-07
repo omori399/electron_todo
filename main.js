@@ -36,25 +36,27 @@ const createWindow = () => {
       })
   })
 
-  ipcMain.handle('getTodoList', async () => {
-    return store.get('todoList',[])
-  })
-
-  ipcMain.handle('setTodoList', async (event,data) => {
-    store.set('todoList',data)
-  })
-
-  ipcMain.handle('deleteTodoList', async () => {
-    store.clear()
-  })
-
   mainWindow.loadFile('index.html')
   //デバック時に使用
   // mainWindow.openDevTools()
 };
 
+
+
 app.whenReady().then(() => {
     createWindow()
+})
+
+ipcMain.handle('getTodoList', async () => {
+  return store.get('todoList',[])
+})
+
+ipcMain.handle('setTodoList', async (event,data) => {
+  store.set('todoList',data)
+})
+
+ipcMain.handle('deleteTodoList', async () => {
+  store.clear()
 })
 
 //windowsやlinuxだとウィンドウが終了するとアプリケーションが完全に終了する。
