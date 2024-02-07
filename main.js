@@ -25,19 +25,18 @@ const createWindow = () => {
     subWindow.loadFile('sub.html')
   })
 
-  ipcMain.handle('open-dialog', async (_e, _arg) => {
+  ipcMain.handle('open-dialog', async () => {
     return dialog
       .showOpenDialog(mainWindow, {
         properties: ['openFile'],
       })
       .then((result) => {
-        console.log(result)
         if (result.canceled) return ''
         return result.filePaths[0]
       })
   })
 
-  ipcMain.handle('getTodoList', async (event,data) => {
+  ipcMain.handle('getTodoList', async () => {
     return store.get('todoList',[])
   })
 
@@ -45,7 +44,7 @@ const createWindow = () => {
     store.set('todoList',data)
   })
 
-  ipcMain.handle('deleteTodoList', async (event,data) => {
+  ipcMain.handle('deleteTodoList', async () => {
     store.clear()
   })
 
@@ -54,7 +53,6 @@ const createWindow = () => {
   // mainWindow.openDevTools()
 };
 
-// ipcMain.handle('')
 app.whenReady().then(() => {
     createWindow()
 })
